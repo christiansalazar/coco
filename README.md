@@ -90,7 +90,7 @@ INSTALACION / INSTALL
 
 					'allowedExtensions'=>array('jpeg','jpg','gif','png'),
 					'sizeLimit'=>2000000,
-					'uploadDir' = 'assets/',
+					'uploadDir' => 'assets/',
 				)
 			);
 		?>
