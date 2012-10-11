@@ -44,7 +44,7 @@ INSTALACION / INSTALL
 			'application.extensions.coco.*',			// <------
 		),
 
-3.	[ES] Conecta el widget con tu aplicación web, usa cualquier action (verifica que tu sistema RBAC le de permisos):
+3.	[ES] Conecta el widget con tu aplicación web, usa cualquier action.
 	[EN] Connect the widget wit your current application using a fixed Action in siteController (or a distinct controller if you prefer).
 
 		[ES] edita
