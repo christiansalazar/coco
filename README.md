@@ -1,9 +1,14 @@
 Coco! Multi file Uploader Widget
 ================================
 
-by: Christian Salazar. christiansalazarh@gmail.com	@yiienespanol, oct. 2012.
+by:
+Christian Salazar. christiansalazarh@gmail.com	@yiienespanol, oct. 2012.
+[http://trucosdeprogramacionmovil.blogspot.com/](http://trucosdeprogramacionmovil.blogspot.com/ "http://trucosdeprogramacionmovil.blogspot.com/")
 
-[BSD Licence](http://opensource.org/licenses/bsd-license.php)"http://opensource.org/licenses/bsd-license.php"
+[http://opensource.org/licenses/bsd-license.php](http://opensource.org/licenses/bsd-license.php "http://opensource.org/licenses/bsd-license.php")
+
+[Go to Coco Repository at Bit Bucket !](https://bitbucket.org/christiansalazarh/coco/ "Go to Coco Repository at Bit Bucket !")
+------------------------------------------------------------------------------------------------------------------------------
 
 (Español & English)
 
@@ -81,29 +86,34 @@ INSTALACION / INSTALL
 4.	[ES] Usa el widget en cualquier form.
 	[EN] Use the widget in your form.
 
-		<?php
-			$this->widget('ext.coco.CocoWidget'
-				,array(
-					'id'=>'cocowidget1',
 
-					'onCompleted'=>'function(id,filename,jsoninfo){  }',
-					'onCancelled'=>'function(id,filename){ alert("cancelled "+filename); }',
-					'onMessage'=>'function(m){ alert(m); }',
 
-					'allowedExtensions'=>array('jpeg','jpg','gif','png'),
-					'sizeLimit'=>2000000,
-					'uploadDir' => 'assets/',
-				)
-			);
-		?>
+~~~
+[php]
+<?php
+	$this->widget('ext.coco.CocoWidget'
+		,array(
+			'id'=>'cocowidget1',
+			'onCompleted'=>'function(id,filename,jsoninfo){  }',
+			'onCancelled'=>'function(id,filename){ alert("cancelled"); }',
+			'onMessage'=>'function(m){ alert(m); }',
+			'allowedExtensions'=>array('jpeg','jpg','gif','png'),
+			'sizeLimit'=>2000000,
+			'uploadDir' => 'assets/',
+		));
+	?>
+~~~
+
 
 
 Extra Options
 -------------
 
-		'buttonText'=>'Find & Upload',
-		'dropFilesText'=>'Drop Files Here !',
-		'htmlOptions'=>array('style'=>'width: 300px; float: left; margin-right: 10px;'),
-		'defaultControllerName'=>'site',
-		'defaultActionName'=>'coco',
-
+~~~
+[php]
+'buttonText'=>'Find & Upload',
+'dropFilesText'=>'Drop Files Here !',
+'htmlOptions'=>array('style'=>'width: 300px;'),
+'defaultControllerName'=>'site',
+'defaultActionName'=>'coco',
+~~~
