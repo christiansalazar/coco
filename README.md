@@ -3,6 +3,8 @@ Coco! Multi file Uploader Widget
 
 by: Christian Salazar. christiansalazarh@gmail.com	@yiienespanol, oct. 2012.
 
+[BSD Licence](http://opensource.org/licenses/bsd-license.php)"http://opensource.org/licenses/bsd-license.php"
+
 (Español & English)
 
 1.	Single & Multi File Uploads via Ajax-jQuery
