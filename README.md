@@ -31,10 +31,10 @@ INSTALACION / INSTALL
 		cd /home/blabla/myapp/protected
 		mkdir extensions
 		cd extensions
-		git clone URL
+		git clone git@bitbucket.org:christiansalazarh/coco.git
 
-	[ES](Si no usas GIT simplemente copia el contenido de la extension directamente dentro de 'extensions')
-	[EN](If you dont use GIT please copy the entire 'coco' folder into your extensions folder)
+		[ES] Si no usas GIT simplemente copia el contenido de la extension directamente dentro de 'extensions'
+		[EN] If you dont use GIT please copy the entire 'coco' folder into your extensions folder
 
 2.	Setup 'config/main'
 
@@ -44,8 +44,8 @@ INSTALACION / INSTALL
 			'application.extensions.coco.*',			// <------
 		),
 
-3.	[ES]Conecta el widget con tu aplicación web, usa cualquier action (verifica que tu sistema RBAC le de permisos):
-	[EN]Connect the widget wit your current application using a fixed Action in siteController (or a distinct controller if you prefer).
+3.	[ES] Conecta el widget con tu aplicación web, usa cualquier action (verifica que tu sistema RBAC le de permisos):
+	[EN] Connect the widget wit your current application using a fixed Action in siteController (or a distinct controller if you prefer).
 
 		[ES] edita
 		[EN] must edit:
