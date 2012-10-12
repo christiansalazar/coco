@@ -25,6 +25,9 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 	public $onCompleted;
 	public $onCancelled;
 	public $onMessage;
+	public $receptorClassName;
+	public $methodName;
+	public $userdata;
 
 	private $_baseUrl;
 
@@ -37,6 +40,8 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 		$this->registerCoreScripts();
 		if($this->sizeLimit == null)
 			$this->sizeLimit = 2 * 1024 * 1024;
+		if($this->methodName == null)
+			$this->methodName = 'coco_onFileUploaded';
 	}
 	public function run(){
 
@@ -74,6 +79,9 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 			'allowedExtensions'=>$this->allowedExtensions,
 			'sizeLimit'=>$this->sizeLimit,
 			'uploadDir'=>$this->uploadDir,
+			'receptorClassName'=>$this->receptorClassName,
+			'methodName'=>$this->methodName,
+			'userdata'=>$this->userdata,
 		);
 
 		$options = CJavaScript::encode(
@@ -131,6 +139,22 @@ echo
 		}
 	}
 
+	private function getClassNameFromPhp($filename){
+		$noext = trim(substr(strrev(trim($filename)),4,strlen(trim($filename))-4));
+		$k=0;
+		for($i=0;$i<strlen($noext);$i++){
+			if(($noext[$i]=='\\') || ($noext[$i]=='/'))
+				$k=$i;
+			if($k > 0)
+				break;
+		}
+		if($k==0)
+			$k = strlen($noext);
+
+		return strrev(substr($noext,0,$k));
+	}
+
+
 	// de: EYuiActionRunnable
 	public function runAction($action,$data) {
 		Yii::log('ACTION CALLED - action is: '.$action,'info');
@@ -140,6 +164,9 @@ echo
 		$this->allowedExtensions = $vars['allowedExtensions'];
 		$this->sizeLimit = (integer)$vars['sizeLimit'];
 		$this->uploadDir = $vars['uploadDir'];
+		$this->receptorClassName = $vars['receptorClassName'];
+		$this->methodName = $vars['methodName'];
+		$this->userdata = $vars['userdata'];
 
 		if(($this->allowedExtensions == null) || ($this->allowedExtensions==''))
 			$this->allowedExtensions = array();
@@ -159,6 +186,8 @@ echo
 			if(isset($result['success'])){
 				if($result['success']==true){
 					Yii::log('ACTION CALLED - RESULT=SUCCESS','info');
+					$fullpath = $result['fullpath'];
+					$this->onFileUploaded($fullpath,$this->userdata);
 				}
 				else{
 					Yii::log('ACTION CALLED - RESULT=ERROR1','info');
@@ -169,4 +198,58 @@ echo
 		}
 
 	}
+
+	private function onFileUploaded($filePath,$userdata){
+
+		// will invoke method in a class defined when you setup the widget:
+		// using: receptorClassName and methodName attributes.
+		$this->_invokeMethod($filePath,$userdata);
+
+	}
+
+	private function _invokeMethod($upladedFilePath,$userdata){
+		try{
+			if(!empty($this->receptorClassName)){
+				$phpFilepath = Yii::getPathOfAlias($this->receptorClassName).".php";
+				$className = $this->getClassNameFromPhp($phpFilepath);
+				Yii::log('receptorClassName is: '.$phpFilepath.', className='.$className,'info');
+
+				if(!file_exists($phpFilepath))
+				{
+					Yii::log('the provided receptorClassName does not exist.'.$phpFilepath,'error');
+					return false;
+				}
+
+				if(!class_exists($className,false))
+					require($phpFilepath);
+
+				if(!class_exists($className,false))
+					return false;
+
+				$inst = new $className();
+				if($inst != null){
+					if(method_exists($inst,$this->methodName)){
+						$methodname = $this->methodName;
+						try{
+							$inst->$methodname($upladedFilePath,$userdata);
+						}catch(Exception $e){
+							Yii::log(__CLASS__.' an error occurs when invoke: '.$phpFilepath.' method: '.$methodname
+								.', error is: '.$e
+							,'error');
+						}
+						// method invoked
+					}
+					else{
+						Yii::log('the defined receptorClassName has not a method named -'.$this->methodName.'-'
+							,'error');
+					}
+				}else{
+					Yii::log('the defined receptorClassName is an invalid class. cannot be instanciated.','error');
+				}
+			}
+		}catch(Exception $e){
+			Yii::log(__CLASS__.' an error occurs.','error');
+		}
+	}
+
 }

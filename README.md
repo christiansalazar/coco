@@ -33,7 +33,7 @@ Coco toma su funcionalidad de una librería PHP muy buena que consegui hace un a
 INSTALACION / INSTALL
 ---------------------
 
-1. 	GIT Cloning
+## 1) GIT Cloning
 
 		cd /home/blabla/myapp/protected
 		mkdir extensions
@@ -43,7 +43,7 @@ INSTALACION / INSTALL
 		[ES] Si no usas GIT simplemente copia el contenido de la extension directamente dentro de 'extensions'
 		[EN] If you dont use GIT please copy the entire 'coco' folder into your extensions folder
 
-2.	Setup 'config/main'
+## 2) Setup 'config/main'
 
 		'import'=>array(
 			'application.models.*',
@@ -51,42 +51,42 @@ INSTALACION / INSTALL
 			'application.extensions.coco.*',			// <------
 		),
 
-3.	[ES] Conecta el widget con tu aplicación web, usa cualquier action.
-	[EN] Connect the widget wit your current application using a fixed Action in siteController (or a distinct controller if you prefer).
+## 3) Action Setup
 
-		[ES] edita
-		[EN] must edit:
+(EN) Connect the widget with your current application using a fixed Action in siteController (or a distinct controller if you prefer).
 
-			myapp/protected/controllers/SiteController.php
+(ES) Conecta el widget con tu aplicación web, usa cualquier action.
 
-		[ES] agrega un action fijo
-		[EN] add a fixed action:
+By default, using: / Por defecto usar:
 
-		IMPORTANT:
-			Este action solo es requerido una vez para todo el proyecto !!
-			This action is required only one time for all above project !!
+myapp/protected/controllers/SiteController.php
 
-			public function actions()
-			{
-				return array(
-					'captcha'=>array(
-						'class'=>'CCaptchaAction',
-						'backColor'=>0xFFFFFF,
-					),
-					'page'=>array(
-						'class'=>'CViewAction',
-					),
-					'coco'=>array(
-						'class'=>'CocoAction',
-					),
-				);
-			}
+IMPORTANT:
+	(ES) Este action solo es requerido una vez para todo el proyecto !!
+	(EN) This action is required only one time for all above project !!
+
+~~~
+[php]
+	public function actions()
+	{
+		return array(
+			'captcha'=>array(
+				'class'=>'CCaptchaAction',
+				'backColor'=>0xFFFFFF,
+			),
+			'page'=>array(
+				'class'=>'CViewAction',
+			),
+			'coco'=>array(
+				'class'=>'CocoAction',
+			),
+		);
+	}
+
+~~~
 
 
-4.	[ES] Usa el widget en cualquier form.
-	[EN] Use the widget in your form.
-
-
+## 4) Insert and configure the Widget / Configura el Widget
 
 ~~~
 [php]
@@ -99,15 +99,75 @@ INSTALACION / INSTALL
 			'onMessage'=>'function(m){ alert(m); }',
 			'allowedExtensions'=>array('jpeg','jpg','gif','png'),
 			'sizeLimit'=>2000000,
-			'uploadDir' => 'assets/',
+			'uploadDir' => 'assets/', // please always remember to finish with an slash '/'
+
+			// this arguments are used to send a notification
+			// on a specific class when a new file is uploaded,
+			// please configure and uncomment in order to receive
+			// your uploaded file:
+
+			// 'receptorClassName'=>'application.models.MyModel',
+			// 'methodName'=>'onFileUploaded',
+			// 'userdata'=>$model->primaryKey,
 		));
 	?>
 ~~~
 
+## 5) (EN) How to receive the uploaded file.
+
+Coco will invoke an specific method name (methodName) in an specific class provided in widget config (receptorClassName). When a new file arrives from upload the Coco will invoke this method passing to you the 'userdata' argument and the full file path.
+
+By example, suppose you have /protected/models/MyModel.php and you need the uploaded file arrives in this class, so the widget config will be:
+
+		// 'receptorClassName'=>'application.models.MyModel',
+		// 'methodName'=>'myFileReceptor',
+		// 'userdata'=>$model->primaryKey,
+
+Your class and method in MyModel will be:
+
+~~~
+[php]
+class MyModel {
+
+	public function myFileReceptor($fullFileName,$userdata) {
+		// userdata is the same passed via widget config.
+	}
+}
+~~~
 
 
-Extra Options
--------------
+
+
+## 5) (ES) Cómo recibir el archivo que hemos subido.
+
+Coco invocará un metodo especifico (methodName) en una clase (receptorClassName) que tu definas en la configuracion del widget. Cuando un archivo ha sido subido exitosamente entonces Coco instanciará esta clase que tu indicas e invoca el metodo mencionado, así tu recibes el archivo.
+
+Ejemplo, supongamos que tienes la clase /protected/models/MyModel.php y quieres recibir aqui los archivos subidos para posterior procesamiento, entonces:
+
+~~~
+[php]
+class MyModel {
+
+	public function myFileReceptor($fullFileName,$userdata) {
+		// userdata is the same passed via widget config.
+		// userdata es el mismo valor pasado mediante la config del widget.
+	}
+}
+~~~
+
+y, en la configuracion del widget indicarias:
+
+		// 'receptorClassName'=>'application.models.MyModel',
+		// 'methodName'=>'myFileReceptor',
+		// 'userdata'=>$model->primaryKey,
+
+## 6)  File is not received / El archivo no es recibido.
+
+	An internal error occurs, please check log for errors. Coco will write an error log when something is wrong.
+
+	Esto sucede si ha ocurrido un error interno, Coco va a reportar los errores por medio de log errors.
+
+## 7) Extra Options
 
 ~~~
 [php]
