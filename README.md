@@ -99,7 +99,7 @@ IMPORTANT:
 			'onMessage'=>'function(m){ alert(m); }',
 			'allowedExtensions'=>array('jpeg','jpg','gif','png'),
 			'sizeLimit'=>2000000,
-			'uploadDir' => 'assets/', // please always remember to finish with an slash '/'
+			'uploadDir' => 'assets/', // coco will automatically perform @mkdir
 
 			// this arguments are used to send a notification
 			// on a specific class when a new file is uploaded,

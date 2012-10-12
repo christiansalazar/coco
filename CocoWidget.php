@@ -182,6 +182,10 @@ echo
 				return;
 			}
 
+			// ensure directory
+			$this->uploadDir = rtrim($this->uploadDir,'/').'/';
+			@mkdir($this->uploadDir);
+
 			$result = $uploader->handleUpload($this->uploadDir);
 			if(isset($result['success'])){
 				if($result['success']==true){
