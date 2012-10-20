@@ -176,7 +176,7 @@ echo
 
 		if($action == 'upload'){
 
-			$uploader = new ValumsFileUploader(array(), $this->sizeLimit);
+			$uploader = new ValumsFileUploader($this->allowedExtensions, $this->sizeLimit);
 			if($uploader->checkServerSettings() != null){
 				Yii::log("CocoWidget. Please increase post_max_size and upload_max_filesize to ".$this->sizeLimit,"error");
 				return;
