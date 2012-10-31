@@ -13,6 +13,10 @@ Christian Salazar. christiansalazarh@gmail.com	@yiienespanol, oct. 2012.
 [Go to Coco Repository at Bit Bucket !](https://bitbucket.org/christiansalazarh/coco/ "Go to Coco Repository at Bit Bucket !")
 ------------------------------------------------------------------------------------------------------------------------------
 
+Requirement: Yii  1.1.11
+if you are using a lower yii version then you will receive an error about "CJavaScriptExpression", please refer to issues about how to solve this issue.
+
+
 1.	Single & Multi File Uploads via Ajax-jQuery
 1.	Drag & Drop.
 
