@@ -102,7 +102,7 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 echo
 "
 	<!-- CocoWidget begins -->
-	<div id='{$id}' {$htopts}'>
+	<div id='{$id}' {$htopts}>
 		<div id='{$upid}' class='uploader'></div>
 		<div id='{$logid}' class='logger'></div>
 	</div>
