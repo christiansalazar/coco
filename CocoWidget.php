@@ -48,7 +48,10 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 		$id=$this->id;
 		$upid = $id.'uploader';
 		$logid = $id.'logger';
-		$action = CHtml::normalizeUrl(array($this->defaultControllerName.'/'.$this->defaultActionName));
+		$action = array($this->defaultControllerName.'/'.$this->defaultActionName);
+		$action['action']='upload';
+		$action['data']=""; // see later after $vars
+
 
 		$htopts = '';
 		if(empty($this->htmlOptions)){
@@ -84,18 +87,20 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 			'userdata'=>$this->userdata,
 		);
 
+		$action['data'] = serialize($vars);
+
 		$options = CJavaScript::encode(
 			array(
 				'id'=>$id,
 				'loggerid'=>$logid,
-				'action'=>$action,
+				'action'=>CHtml::normalizeUrl($action),
 				'onCompleted'=>$this->onCompleted,
 				'onCancelled'=>$this->onCancelled,
 				'onMessage'=>$this->onMessage,
 				'buttonText'=>$this->buttonText,
 				'dropFilesText'=>$this->dropFilesText,
 				'uploaderContainer'=>$upid,
-				'data'=>serialize($vars),
+				//'data'=>serialize($vars),
 			)
 		);
 

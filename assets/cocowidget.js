@@ -32,7 +32,8 @@ var CocoWidget = function(options) {
 			buttonText: options.buttonText,
 			dropFilesText: options.dropFilesText,
 			element: document.getElementById(options.uploaderContainer),
-			action: options.action + '&action=upload' + _this.nocache() + '&data='+options.data,
+			//action: options.action + '&action=upload' + _this.nocache() + '&data='+options.data,
+			action: options.action,
 			onComplete: _this.onComplete,
 			onCancel: _this.onCancel,
 			showMessage: _this.showMessage
