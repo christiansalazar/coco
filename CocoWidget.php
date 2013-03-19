@@ -28,6 +28,10 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 	public $receptorClassName;
 	public $methodName;
 	public $userdata;
+	public $multipleFileSelection=true; // true or false. allow the user to select multiple files at once.
+	public $maxConnections=3; // max simultaneus connections (client-side)
+	public $maxUploads=-1; // -1=unlimited. number of uploads allowed (client-side)
+	public $maxUploadsReachMessage = ''; // a message when maxUploads is reach.
 
 	private $_baseUrl;
 
@@ -101,6 +105,10 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 				'dropFilesText'=>$this->dropFilesText,
 				'uploaderContainer'=>$upid,
 				'sizeLimit'=>$this->sizeLimit, // for client-side size validt.
+				'multipleFileSelection'=>$this->multipleFileSelection,
+				'maxConnections'=>$this->maxConnections,
+				'maxUploads'=>$this->maxUploads,
+				'maxUploadsReachMessage'=>$this->maxUploadsReachMessage,
 				//'data'=>serialize($vars),
 			)
 		);

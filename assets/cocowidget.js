@@ -26,9 +26,25 @@ var CocoWidget = function(options) {
 
 	}
 
+	this.onSubmit = function(id, filename){
+		if(options.maxUploads == -1){
+			return true;
+		}else
+			if(id >= options.maxUploads){
+				if(options.onMessage != null)
+					if(options.maxUploadsReachMessage != '')
+						options.onMessage(options.maxUploadsReachMessage);
+				return false;
+			}
+			else
+				return true;
+	}
+
 	this.run = function(){
 		var _this = this;
 		var _uploader = new qq.FileUploader({
+			maxConnections: options.maxConnections, // max simultaneous
+			multiple: options.multipleFileSelection, // user file selection
 			sizeLimit: options.sizeLimit,	// client side size validation
 			buttonText: options.buttonText,
 			dropFilesText: options.dropFilesText,
@@ -36,6 +52,7 @@ var CocoWidget = function(options) {
 			action: options.action,
 			onComplete: _this.onComplete,
 			onCancel: _this.onCancel,
+			onSubmit: _this.onSubmit,// helps controlling the number of uploads
 			showMessage: _this.showMessage
 		});
 	}
