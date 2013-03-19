@@ -29,10 +29,10 @@ var CocoWidget = function(options) {
 	this.run = function(){
 		var _this = this;
 		var _uploader = new qq.FileUploader({
+			sizeLimit: options.sizeLimit,	// client side size validation
 			buttonText: options.buttonText,
 			dropFilesText: options.dropFilesText,
 			element: document.getElementById(options.uploaderContainer),
-			//action: options.action + '&action=upload' + _this.nocache() + '&data='+options.data,
 			action: options.action,
 			onComplete: _this.onComplete,
 			onCancel: _this.onCancel,

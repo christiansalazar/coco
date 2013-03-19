@@ -80,7 +80,7 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 
 		$vars = array(
 			'allowedExtensions'=>$this->allowedExtensions,
-			'sizeLimit'=>$this->sizeLimit,
+			'sizeLimit'=>$this->sizeLimit,	// server-side size validation
 			'uploadDir'=>$this->uploadDir,
 			'receptorClassName'=>$this->receptorClassName,
 			'methodName'=>$this->methodName,
@@ -100,6 +100,7 @@ class CocoWidget extends CWidget implements EYuiActionRunnable {
 				'buttonText'=>$this->buttonText,
 				'dropFilesText'=>$this->dropFilesText,
 				'uploaderContainer'=>$upid,
+				'sizeLimit'=>$this->sizeLimit, // for client-side size validt.
 				//'data'=>serialize($vars),
 			)
 		);
